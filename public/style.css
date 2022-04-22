@@ -1,0 +1,302 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  display: grid;
+  height: 100vh;
+  overflow: hidden;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 64px 1fr 92px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Верхняя панель  */
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: rgb(41, 41, 41);
+  grid-column: 2 / 3;
+  justify-content: space-between;
+  min-width: 380px;
+}
+
+.header__profile {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 0;
+  border-radius: 23px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  height: 32px;
+  justify-content: center;
+  margin-inline-start: 16px;
+  padding: 2px;
+  position: relative;
+}
+
+.header__figure {
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.header__avatar {
+  border-radius: 50%;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.header__username {
+  font-size: 0.875rem;
+  line-height: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+  box-sizing: border-box;
+  margin-block: 0px;
+  font-weight: 700;
+  color: inherit;
+  display: block;
+  max-width: 110px;
+  overflow: hidden;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header__button-down {
+  fill: currentcolor;
+}
+
+/* Боковая панель READY */
+
+a {
+  text-decoration: none;
+}
+
+.accordion {
+  padding-top: 24px;
+  background-color: #000;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+}
+
+.spotify-logo {
+  margin-bottom: 18px;
+  height: 40px;
+  max-width: 131px;
+  width: 100%;
+}
+
+.logo__a {
+  color: white;
+  padding: 0 24px;
+}
+
+.tags {
+  list-style: none;
+  padding: 0 8px;
+  margin: 0;
+}
+
+.tag {
+  color: #fff;
+}
+
+.tag__span {
+  font-size: 0.875rem;
+  line-height: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 700;
+}
+
+.tag__a {
+  color: inherit;
+  align-items: center;
+  border-radius: 4px;
+  display: flex;
+  gap: 16px;
+  height: 40px;
+  padding: 0 16px;
+}
+
+.tag__a:hover {
+  color: #c2c2c2;
+}
+
+/* Нижняя панель Ready */
+
+.footer {
+  grid-column: 1 / 3;
+  border-top: 1px solid #282828;
+  background-color: #181818;
+  align-items: center;
+  padding: 0 16px;
+  display: flex;
+  min-width: 620px;
+}
+
+.footer__play-now {
+  position: relative;
+  background-color: #181818;
+  display: flex;
+  min-width: 180px;
+  width: 30%;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  z-index: 13;
+  transition: transform 0.25s cubic-bezier(0.3, 0, 0, 1),
+    -webkit-transform 0.25s cubic-bezier(0.3, 0, 0, 1);
+}
+
+.footer__track {
+  padding: 3px 30px 0 14px;
+}
+
+.footer__info {
+  display: block;
+  line-height: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.footer__info:hover {
+  color: white;
+}
+
+.footer__name {
+  color: #fff;
+  font-size: 0.875rem;
+}
+
+.footer__autor {
+  color: #b3b3b3;
+  font-size: 0.6875rem;
+}
+
+.footer__like,
+.footer__toggle {
+  background: transparent;
+  fill: #b3b3b3;
+  margin-top: 1px;
+  margin-right: 17px;
+  border: 0;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  padding: 0;
+}
+
+.footer__like:hover,
+.footer__toggle:hover {
+  fill: white;
+}
+
+.footer__panel {
+  max-width: 722px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer__controls {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.footer__btn {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  fill: #b3b3b3;
+  color: #b3b3b3;
+}
+
+.footer__btn:hover {
+  fill: white;
+}
+
+.footer__play {
+  align-items: center;
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  min-width: 32px;
+  position: relative;
+  transition: none 33ms cubic-bezier(0.3, 0, 0.7, 1);
+  transition-property: all;
+  width: 32px;
+}
+
+.footer__play:hover {
+  transform: scale(1.06);
+}
+
+.time-panel {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.time-start,
+.time-end {
+  position: relative;
+  z-index: 13;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+  background-color: #181818;
+  color: #a9a9a9;
+  padding: 0 15px;
+}
+
+.time-track {
+  background-color: #535353;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.time-thumb {
+  transform: translateX(calc(-100% + 70%));
+  position: absolute;
+  background-color: #b3b3b3;
+  width: 32.45%;
+  height: 4px;
+  z-index: 12;
+  border-radius: 2px;
+}
+
+.footer__changer {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  width: 240px;
+  justify-content: space-between;
+}
+
+.footer__volume {
+  width: 93px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #464646;
+}

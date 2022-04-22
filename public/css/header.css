@@ -1,0 +1,78 @@
+/* Хедер Ready */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.header__profile {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 0;
+  border-radius: 23px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  height: 32px;
+  justify-content: center;
+  margin-inline-start: 16px;
+  padding: 2px;
+  position: relative;
+}
+
+.header__figure {
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.header__avatar {
+  border-radius: 50%;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.header__username {
+  font-size: 0.875rem;
+  line-height: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+  box-sizing: border-box;
+  margin-block: 0px;
+  font-weight: 700;
+  color: inherit;
+  display: block;
+  max-width: 110px;
+  overflow: hidden;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header__button-down {
+  fill: currentcolor;
+}
+
+.header__left {
+  flex: 0.5 1;
+  display: flex;
+  background-color: white;
+  padding: 10px;
+  border-radius: 30px;
+  color: #000;
+  align-items: center;
+}
+
+.header__left > input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.header__left > .svgIcon:hover {
+  color: #000;
+}

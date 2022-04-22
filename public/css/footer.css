@@ -1,0 +1,165 @@
+/* Нижняя панель */
+
+.footer {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  bottom: 0;
+  box-sizing: border-box;
+  padding: 0 16px;
+  height: 92px;
+  width: 100%;
+  border-top: 1px solid #282828;
+  background-color: #181818;
+}
+
+.footer__right * .MuiSlider-root {
+  color: #b3b3b3;
+}
+
+.footer__left {
+  display: flex;
+  align-items: center;
+  color: white;
+  flex: 0.3 1;
+}
+
+.footer__center {
+  flex: 0.4 1;
+
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Плееер Ready */
+
+.footer__playing {
+  max-width: 300px;
+  padding: 0 100px;
+  width: 100%;
+  display: flex;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.footer__bar {
+  margin-bottom: 16px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.footer__bar > span {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #c7c7c7;
+}
+
+.audio-player-container {
+  width: 100%;
+  padding: 0 12px;
+}
+
+.audio-progress {
+  height: 0.285rem;
+  width: 100%;
+  background-color: #727272;
+  border-radius: 2px;
+}
+.audio-progress .bar {
+  height: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+.audio-progress-handle {
+  visibility: hidden;
+  display: block;
+  position: absolute;
+  margin-top: -3px;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+.audio-player-container:hover .audio-progress-handle {
+  visibility: visible;
+}
+
+.audio-player-container:hover .audio-progress .bar {
+  background-color: #1db954;
+}
+
+.footer__icon {
+  color: #a7a7a7;
+  width: 16px;
+  height: 16px;
+}
+
+.footer__btn-play {
+  background-color: white;
+  color: #181818;
+  width: 16px;
+  height: 16px;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.footer__icon:hover,
+.footer__btn-play:hover {
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.2) !important;
+}
+
+.footer__right {
+  margin: auto 0;
+  color: white;
+  flex: 0.3 1;
+}
+
+/* Инфо о трэке Ready */
+
+.footer__albumLogo {
+  height: 60px;
+  width: 60px;
+  margin-right: 20px;
+  object-fit: contain;
+}
+
+.footer__songInfo > h4 {
+  margin-bottom: 5px;
+}
+
+.footer__songInfo > p {
+  font-size: 12px;
+}
+
+/* Управление громкостью Ready */
+
+.footer__container {
+  max-width: 200px;
+  display: flex;
+  box-sizing: border-box;
+  margin-left: auto;
+  align-items: center;
+}
+
+.footer__container > .footer__item {
+  padding: 8px;
+}
+
+.footer__container > .audio-player-container {
+  padding: 0;
+  margin-top: -4px;
+}
