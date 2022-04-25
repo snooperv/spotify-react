@@ -45,7 +45,7 @@
   color: white;
 }
 
-.sidebar > hr {
+.sidebar__hr {
   border: 1px solid #282828;
   width: 90%;
   margin: 10px auto;
@@ -54,10 +54,4 @@
 .sidebarOption__icon {
   padding-left: 15px;
   padding-right: 15px;
-}
-
-.sidebarOption > p {
-  margin-top: 10px;
-  margin-left: 20px;
-  font-size: 14px;
 }

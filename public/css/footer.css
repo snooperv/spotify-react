@@ -13,10 +13,6 @@
   background-color: #181818;
 }
 
-.footer__right * .MuiSlider-root {
-  color: #b3b3b3;
-}
-
 .footer__left {
   display: flex;
   align-items: center;
@@ -55,7 +51,7 @@
   width: 100%;
 }
 
-.footer__bar > span {
+.footer__bar-span {
   font-size: 0.6875rem;
   line-height: 1rem;
   text-transform: none;
@@ -74,7 +70,7 @@
   background-color: #727272;
   border-radius: 2px;
 }
-.audio-progress .bar {
+.audio-progress-bar {
   height: 100%;
   background-color: #fff;
   border-radius: 2px;
@@ -97,7 +93,7 @@
   visibility: visible;
 }
 
-.audio-player-container:hover .audio-progress .bar {
+.audio-player-container:hover .audio-progress-bar {
   background-color: #1db954;
 }
 
@@ -137,11 +133,11 @@
   object-fit: contain;
 }
 
-.footer__songInfo > h4 {
+.footer__songInfo-h4 {
   margin-bottom: 5px;
 }
 
-.footer__songInfo > p {
+.footer__songInfo-p {
   font-size: 12px;
 }
 
@@ -155,11 +151,20 @@
   align-items: center;
 }
 
-.footer__container > .footer__item {
+.footer__item {
   padding: 8px;
 }
 
-.footer__container > .audio-player-container {
+.footer__volume {
+  width: 100%;
   padding: 0;
   margin-top: -4px;
+}
+
+.footer__volume:hover .audio-progress-handle {
+  visibility: visible;
+}
+
+.footer__volume:hover .audio-progress-bar {
+  background-color: #1db954;
 }

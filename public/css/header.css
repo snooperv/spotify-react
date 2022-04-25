@@ -67,12 +67,9 @@
   align-items: center;
 }
 
-.header__left > input {
+.header__search {
   border: none;
   outline: none;
   width: 100%;
 }
 
-.header__left > .svgIcon:hover {
-  color: #000;
-}
