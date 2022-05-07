@@ -8,7 +8,6 @@ import First from "./First";
 import Search from "./Search";
 import MediaMusicians from "./MediaMusicians";
 import { token } from "./App";
-import Login from "./Login";
 import MediaAlbum from "./MediaAlbum";
 
 interface MainProps {
@@ -16,9 +15,9 @@ interface MainProps {
 }
 
 function Main({ page }: MainProps) {
-  /* if (!token) {
+  if (!token) {
     return <Navigate to="/" />;
-  } */
+  }
   /* console.log("token:", token); */
   let content = <First />;
   let main = "main ";
