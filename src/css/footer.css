@@ -89,11 +89,7 @@
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
 }
 
-.audio-player-container:hover .audio-progress-handle {
-  visibility: visible;
-}
-
-.audio-player-container:hover .audio-progress-bar {
+.audio-progress-bar:hover { 
   background-color: #1db954;
 }
 
@@ -115,7 +111,7 @@
 .footer__icon:hover,
 .footer__btn-play:hover {
   transition: transform 0.2s ease-in-out;
-  transform: scale(1.2) !important;
+  transform: scale(1.2);
 }
 
 .footer__right {
@@ -159,12 +155,4 @@
   width: 100%;
   padding: 0;
   margin-top: -4px;
-}
-
-.footer__volume:hover .audio-progress-handle {
-  visibility: visible;
-}
-
-.footer__volume:hover .audio-progress-bar {
-  background-color: #1db954;
 }

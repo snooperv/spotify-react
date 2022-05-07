@@ -4,6 +4,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
+  min-width: 400px;
 }
 
 .header__profile {
@@ -34,6 +35,12 @@
   height: 100%;
   object-fit: cover;
   width: 100%;
+}
+
+.header__photo {
+  width: 28px;
+  height: 28px;
+  inset-inline-start: 0px;
 }
 
 .header__username {
@@ -73,3 +80,25 @@
   width: 100%;
 }
 
+.header__media {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  max-width: 220px;
+}
+
+.header__item {
+  margin-left: 10px;
+  font-size: 0.9rem;
+  font-weight: 620;
+  padding: 7px 10px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.header__item-active {
+  background-color: rgb(0, 0, 0);
+  border: 0 solid;
+  border-radius: 5px;
+  margin-right: -5px;
+}
