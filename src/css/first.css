@@ -1,0 +1,83 @@
+.main-index {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 1));
+  background-color: rgb(22, 24, 104);
+}
+
+/* Инфорамция о плейлисте Ready */
+
+.main__info {
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.main__info-img {
+  height: 20vw;
+  margin: 0 20px;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+}
+
+.main__infoText {
+  flex: 1 1;
+}
+
+.main__infoText-h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.main__infoText-p {
+  font-size: 14px;
+}
+
+/* Иконки плейлиста Ready */
+
+.main__shuffle {
+  font-size: 80px !important;
+  margin-left: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #1db954;
+}
+
+/* Список песен Ready */
+
+.main__songs {
+  z-index: 1;
+  margin: 20px -30px;
+}
+
+.songRow {
+  margin: 0 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  color: white;
+}
+
+.songRow:hover {
+  cursor: pointer;
+  background-color: rgb(50, 50, 50);
+  opacity: 0.8;
+  border-radius: 10px;
+}
+
+.songRow__info {
+  margin-left: 20px;
+}
+
+.songRow__info-h1 {
+  font-size: 16px;
+}
+
+.songRow__info-p {
+  font-size: 14px;
+  margin-top: 3px;
+  color: rgb(195, 195, 195);
+}
+
+.songRow__album {
+  height: 40px;
+  width: 40px;
+}

@@ -1,0 +1,9 @@
+.main-search {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 1));
+  background-color: #393939;
+}
+
+.main-search-h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}

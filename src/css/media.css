@@ -1,0 +1,58 @@
+.main-media {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 1));
+  background-color: #545454;
+}
+
+.main__media-header {
+  margin: 16px 0;
+  font-size: 1.5rem;
+}
+
+.main__media-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  grid-auto-flow: dense;
+}
+
+.main__media-card {
+  background: #181818;
+  padding: 16px;
+  padding-bottom: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.main__media-card:hover {
+  background: #2c2c2c;
+}
+
+.card__img {
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  /* box-shadow: 0 0 15px #626262; */
+  box-shadow: 0 0 24px #393939;
+  margin-bottom: 16px;
+}
+
+.card__img-album {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 0 24px #393939;
+  margin-bottom: 16px;
+}
+
+.card__singer {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.card__type {
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  font-weight: 400;
+  color: #6a6a6a;
+}
