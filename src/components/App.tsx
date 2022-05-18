@@ -5,25 +5,22 @@ import { getTokenFromUrl } from "./spotify";
 import { Navigate } from "react-router-dom";
 
 function App() {
-  token = GetToken();
-  return (
-    <div className="app">{token ? <Navigate to="/home" /> : <Login />}</div>
-  );
-}
-
-function GetToken() {
+  /* Первая страница, которая встречает пользователя */
   const [token, setToken] = useState("");
-
   useEffect(() => {
-    const hash = getTokenFromUrl();
-    window.location.hash = "";
-    const _token = hash.access_token;
-    if (_token) {
-      setToken(_token);
+    let token = window.localStorage.getItem("token"); /* Получаю токен из локального хранилища */
+    if (!token) { /* Если токена нет, назначаю токен */
+      const hash = getTokenFromUrl(); /* Функция, которая получает токен из url после входа в аккаунт спотифай */
+      token = hash.access_token;
+      window.location.hash = "";
+      localStorage.setItem("timeStart", String(Date.now() / 1000)); /* Задаю начальное время токена (в дальнейшем будет проверятся: если прошел час, токен аннулируется) */
+    }
+    if (token) { /* Если токен был получен, кладу в хранилище */
+      setToken(token);
+      localStorage.setItem("token", token);
     }
   }, []);
-  return token;
+  return <div className="app">{token ? <Navigate to="/" /> : <Login />}</div>; /* Если токен есть, возвращается главная страница, если нет, переходит опять на страницу входа */
 }
 
 export default App;
-export let token: string;

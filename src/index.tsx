@@ -8,8 +8,8 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<App/>} />
-        <Route path="/home" element={<Main page="home" />} />
+        <Route path="/login" element={<App/>} />
+        <Route path="/" element={<Main page="home" />} />
         <Route path="/search" element={<Main page="search" />} />
         <Route path="/media" element={<Main page="media" />} />
         <Route path="/album" element={<Main page="media_album" />} />

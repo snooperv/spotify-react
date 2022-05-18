@@ -4,11 +4,11 @@ import { NavLink } from "react-router-dom";
 function Sidebar() {
   return (
     <div className="sidebar">
-      <NavLink to="/home">
+      <NavLink to="/">
         <img className="sidebar__logo" src="img/logo.svg" alt="" />
       </NavLink>
       <NavLink
-        to="/home"
+        to="/"
         className={({ isActive }) =>
           isActive ? "sidebarOption sidebarActive" : "sidebarOption"
         }
