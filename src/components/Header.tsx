@@ -9,7 +9,6 @@ interface HeaderProps {
 
 function Header({ page }: HeaderProps) {
   const { getAboutMe } = Spotify(); /* Подключаю запрос информации о пользователе */
-  const { avatar } = Spotify(); /* Подключаю запрос о картинке аватар (ее можно получить только с помощью VPN, поэтому обрабатываю ее отдельно) */
   const [userInfo, setUserInfo] = useState({ userName: "", userImg: "" }); /* Задаю структуру пользователя */
 
   useEffect(() => {
@@ -18,18 +17,6 @@ function Header({ page }: HeaderProps) {
         userName: result.display_name,
         userImg: "img/avatar.svg", /* Изначально ставлю дефолтную картинку */
       });
-      avatar(result.images[0].url) /* Отправляю запрос на получение аватарки */
-        .then((isAns) => {
-          if (isAns) { /* Если аватарка получена, переназначаю аватарку */
-            setUserInfo({
-              userName: result.display_name,
-              userImg: result.images[0].url,
-            });
-          }
-        })
-        .catch((e) => { /* Если аватар не получен, пишу в консоль предупреждение о том, что нужно подключить VPN */
-          console.log('Не удается загрузить изображение профиля, подключите VPN')
-        });
     });
   }, []);
 
