@@ -32,9 +32,11 @@ function Search() {
 
   const Searching = () => {
     /* Получение результатов поиска и запись в переменную. Поиск идет по searchKey, лимит постаил 50, чтобы не перегружать страницу */
-    searchResults({ query: searchKey, limit: 50 }).then((result) => {
-      setResults({ artists: result.artists, tracks: result.tracks });
-    });
+    if (searchKey !== "") {
+      searchResults({ query: searchKey, limit: 50 }).then((result) => {
+        setResults({ artists: result.artists, tracks: result.tracks });
+      });
+    }
   };
 
   const renderResults = () => {
