@@ -9,7 +9,7 @@ function App() {
   const [token, setToken] = useState("");
   useEffect(() => {
     let token = /* localStorage.getItem("token"); */
-      "BQCU4uTZf40BbOZ3wfWYYvudm_waP_c0BtOuStB0LkADLnp41HJSBnw1mPDP4v5K4C4V7zxH9sJhj9dE0Pw2X8_BCM289yS3Uuc9FX6J2CYzlErwAxYYykSI3_2U-iDDj3YaD_J1M9ejgd2LEDSmQmH6o55W4tvb8f518y-0Ld_SQyA1VDVwy5103bsW1WdNTideKxB6WHWHVYfF6g"; /* Получаю токен из локального хранилища */
+      "BQC65cZfF-wYWqsXrJ7c2FteVrGfRUO-zpnv955-x3_pm4NVFkqUcrFCvUyD7ZQhzSxzP2LiGjGzW0QNOYHD0Vw5ygfwQYarromzxAhTqaVs_rRWTGB_0To4i0aU36ujzoExvFgEHskQ8kWydPDl8Qmqnr8ocNfeqshsi9hTPE1lMn-T91t9jl1sa1S2GKIcbLfzFO7B8zhBsdJBR-hwZOrwHReAs5pn9-Qkjvzoi8cj_1KWrSQ"; /* Получаю токен из локального хранилища */
     if (!token) {
       /* Если токена нет, назначаю токен */
       const hash =

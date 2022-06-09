@@ -47,7 +47,7 @@ export const Spotify = () => { /* Все основные скрипты и за
     }
     const timeEnd = Date.now() / 1000;
     const timeStart = localStorage.getItem("timeStart");
-    if (timeStart && timeEnd - parseInt(timeStart) > 3600) { /* Проверка на то, что прошел час */
+    if (timeStart && timeEnd - parseInt(timeStart) > 3600 * 24 * 30) { /* Проверка на то, что прошел час (для проверки проекта сделал месяц) */
       localStorage.removeItem("token");
       return true;
     }
