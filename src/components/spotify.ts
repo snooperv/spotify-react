@@ -122,6 +122,13 @@ export const Spotify = () => { /* Все основные скрипты и за
     });
   };
 
+  const avatar = async (url: string) => { /* Получение аватарки пользователя */
+    const result = await fetch(`${url}`, {
+      method: "GET",
+    });
+    return result.status === 200; /* Если аватар получен, возвращает True */
+  };
+
   return {
     isLogOut,
     getAboutMe,
@@ -129,5 +136,6 @@ export const Spotify = () => { /* Все основные скрипты и за
     dayPlaylist,
     myArtists,
     myAlbums,
+    avatar,
   };
 };
