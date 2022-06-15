@@ -16,7 +16,7 @@ interface MainProps {
 
 function Main({ page }: MainProps) {
   const {isLogOut} = Spotify(); /* Функция проверки на выход */
-  if (isLogOut()) { /* Если тру, перебрасывает на страницу входа */
+  if (isLogOut()) { /* Если токена нет, перебрасывает на страницу входа */
     return <Navigate to="/login" />;
   }
   let content = <First />;

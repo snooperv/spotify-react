@@ -2,66 +2,106 @@ import "../css/search.css";
 import { Spotify } from "./spotify";
 import { useState } from "react";
 
+interface useQuery {
+  artists?: {
+    /* В дальнейшем я хочу сделать поиск и по исполнителям */
+    items: [
+      {
+        images: [{ url: string }, { url: string }, { url: string }];
+        name: string;
+      }
+    ];
+  };
+  tracks?: {
+    /* Пока что поиск идет по трекам */
+    items: [
+      {
+        id: string;
+        album: {
+          name: string;
+          images: [{ url: string }, { url: string }, { url: string }];
+        };
+        artists: [{ name: string }];
+        name: string;
+      }
+    ];
+  };
+  isFind?: boolean;
+  error: boolean;
+  errorText?: string;
+  isLoading: boolean;
+}
+
 function Search() {
   const { searchResults } = Spotify(); /* Функция запроса получения поиска */
-  const [searchKey, setSearchKey] =
-    useState(""); /* Переменная-ключ, по которому идет поиск результатов */
-  const [results, setResults] = useState({
-    /* Структура переменной поиска */
-    artists: {
-      /* В дальнейшем я хочу сделать поиск и по исполнителям */
-      items: [
-        {
-          images: [{ url: "" }],
-          name: "",
-        },
-      ],
-    },
-    tracks: {
-      /* Пока, что поиск идет по трекам */
-      items: [
-        {
-          id: "",
-          album: { name: "", images: [{ url: "" }] },
-          artists: [{ name: "" }],
-          name: "",
-        },
-      ],
-    },
-  });
+  const [searchKey, setSearchKey] = useState(""); /* Переменная-ключ, по которому идет поиск результатов */
+  const [results, setResults] = useState<useQuery>();
 
   const Searching = () => {
     /* Получение результатов поиска и запись в переменную. Поиск идет по searchKey, лимит постаил 50, чтобы не перегружать страницу */
     if (searchKey !== "") {
-      searchResults({ query: searchKey, limit: 50 }).then((result) => {
-        setResults({ artists: result.artists, tracks: result.tracks });
-      });
+      setResults({ error: false, isLoading: true });
+      searchResults({ query: searchKey, limit: 50 })
+        .then((result) => {
+          if (
+            result.tracks.items.length === 0 ||
+            result.artists.items.length === 0
+          ) {
+            setResults({ isFind: false, error: false, isLoading: false });
+          } else {
+            setResults({
+              artists: result.artists,
+              tracks: result.tracks,
+              isFind: true,
+              error: false,
+              isLoading: false,
+            });
+          }
+        })
+        .catch((error) => {
+          setResults({ error: true, errorText: error, isLoading: false });
+        });
     }
   };
 
   const renderResults = () => {
-    /* Рендер результатов поиска */
-    return results.tracks.items.map((sings) => (
-      <div className="songRow" key={sings.id}>
-        {sings.album.images.length > 2 ? (
-          <img
-            className="songRow__album"
-            src={sings.album.images[2].url}
-            alt=""
-          />
-        ) : (
-          <div>No Image</div>
-        )}
-        <div className="songRow__info">
-          <h1 className="songRow__info-h1">{sings.name}</h1>
-          <p className="songRow__info-p">
-            {sings.artists[0].name} - {sings.album.name}
-          </p>
+    if (results?.isLoading) {
+      return <h3 className="main-search-h3">Загрузка результатов...</h3>;
+    }
+    if (results?.tracks && results.isFind) {
+      /* Рендер результатов поиска */
+      return results.tracks.items.map((sings) => (
+        <div className="songRow" key={sings.id}>
+          {sings.album.images.length > 2 ? (
+            <img
+              className="songRow__album"
+              src={sings.album.images[2].url}
+              alt={sings.album.name}
+            />
+          ) : (
+            <div>No Image</div>
+          )}
+          <div className="songRow__info">
+            <h1 className="songRow__info-h1">{sings.name}</h1>
+            <p className="songRow__info-p">
+              {sings.artists[0].name} - {sings.album.name}
+            </p>
+          </div>
         </div>
-      </div>
-    ));
+      ));
+    } else {
+      return <h3 className="main-search-h3">Нет результатов</h3>;
+    }
   };
 
+  if (results?.error) {
+    return (
+      <div>
+        <h1>Произошла ошибка при загрузке данных</h1>
+        <p>Подробнее: {results?.errorText || "Неизвестная ошибка"} </p>
+      </div>
+    );
+  }
   return (
     <div className="main__search">
       <div className="header__left">
@@ -92,14 +132,7 @@ function Search() {
         />
       </div>
       <h2 className="main-search-h2">Результаты поиска</h2>
-      <div className="main__songs">
-        {results.tracks.items.length === 0 ||
-        results.tracks.items[0].id === "" /* Если результаты не найдены */ ? (
-          <h3 className="main-search-h3">Нет результатов</h3>
-        ) : (
-          renderResults() /* Если результаты найдены, они рендерятся */
-        )}
-      </div>
+      <div className="main__songs">{renderResults()}</div>
     </div>
   );
 }

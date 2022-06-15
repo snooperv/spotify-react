@@ -8,8 +8,7 @@ function App() {
   /* Первая страница, которая встречает пользователя */
   const [token, setToken] = useState("");
   useEffect(() => {
-    let token = /* localStorage.getItem("token"); */
-      "BQC65cZfF-wYWqsXrJ7c2FteVrGfRUO-zpnv955-x3_pm4NVFkqUcrFCvUyD7ZQhzSxzP2LiGjGzW0QNOYHD0Vw5ygfwQYarromzxAhTqaVs_rRWTGB_0To4i0aU36ujzoExvFgEHskQ8kWydPDl8Qmqnr8ocNfeqshsi9hTPE1lMn-T91t9jl1sa1S2GKIcbLfzFO7B8zhBsdJBR-hwZOrwHReAs5pn9-Qkjvzoi8cj_1KWrSQ"; /* Получаю токен из локального хранилища */
+    let token = localStorage.getItem("token"); /* Получаю токен из локального хранилища */
     if (!token) {
       /* Если токена нет, назначаю токен */
       const hash =
