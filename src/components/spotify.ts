@@ -37,7 +37,7 @@ export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${re
 let token: string | null;
 
 export const useGetToken = () => {
-  token = localStorage.getItem("token")
+  token = localStorage.getItem("token");
   if (!token) {
     /* Если токена нет, назначаю токен */
     const hash =
