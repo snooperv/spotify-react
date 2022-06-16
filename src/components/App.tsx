@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import "../css/App.css";
 import Login from "./Login";
-import { getTokenFromUrl, useGetToken } from "./spotify";
+import { useGetToken } from "./spotify";
 import { Navigate } from "react-router-dom";
 
 function App() {

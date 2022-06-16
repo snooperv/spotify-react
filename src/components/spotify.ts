@@ -18,7 +18,7 @@ const scopes = [
   "user-library-read",
 ];
 
-export const getTokenFromUrl = () => {
+const getTokenFromUrl = () => {
   /* Функция получения токена из URL */
   return window.location.hash
     .substring(1)
@@ -34,9 +34,10 @@ export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${re
   "%20"
 )}&response_type=token&show_dialog=true`;
 
-let token = localStorage.getItem("token");
+let token: string | null;
 
 export const useGetToken = () => {
+  token = localStorage.getItem("token")
   if (!token) {
     /* Если токена нет, назначаю токен */
     const hash =
