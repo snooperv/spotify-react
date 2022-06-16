@@ -1,104 +1,89 @@
 import { useState, useEffect } from "react";
 import "../css/first.css";
-import { Spotify } from "./spotify";
+import useQuery from "./query";
 
-interface useQuery {
+interface playlistProp {
   /* Задаю структуру переменной плейлиста */
-  data?: {
-    id: string;
-    description: string;
-    images: [{ url: string }];
-    name: string;
-    tracks: {
-      items: [
-        {
-          track: {
-            id: string;
-            album: {
-              name: string;
-              images: [{ url: string }, { url: string }, { url: string }];
-            };
-            artists: [{ name: string }];
+  id: string;
+  description: string;
+  images: [{ url: string }];
+  name: string;
+  tracks: {
+    items: [
+      {
+        track: {
+          id: string;
+          album: {
             name: string;
+            images: [{ url: string }, { url: string }, { url: string }];
           };
-        }
-      ];
-    };
+          artists: [{ name: string }];
+          name: string;
+        };
+      }
+    ];
   };
-  error: boolean;
-  errorText?: string;
-  isLoading: boolean;
 }
 
 function First() {
-  const { dayPlaylist } = Spotify(); /* Подключаю запрос плейлиста */
-  const [playlist, setPlaylist] = useState<useQuery>();
+  const { error, isLoading, data } = useQuery<playlistProp>(
+    "/playlists/37i9dQZF1E361aZi6orfUx",
+    "GET"
+  );
 
-  useEffect(() => {
-    setPlaylist({ error: false, isLoading: true });
-    /* Получаю плейлист и сохраняю в переменную */
-    dayPlaylist("37i9dQZF1E361aZi6orfUx")
-      .then((data) => {
-        setPlaylist({ data, error: false, isLoading: false });
-      })
-      .catch((error) => {
-        setPlaylist({ error: true, errorText: error, isLoading: false });
-      });
-  }, []);
+  /* console.log(error);
+  console.log(isLoading);
+  console.log(data); */
 
-  const renderResults = () => {
-    if (!playlist?.isLoading && playlist?.data) {
-      /* Рендер полученных результатов */
-      return playlist.data.tracks.items.map((sings) => (
-        <div className="songRow" key={sings.track.id}>
-          {sings.track.album.images[2] ? (
-            <img
-              className="songRow__album"
-              src={sings.track.album.images[2].url}
-              alt={sings.track.album.name}
-            />
-          ) : (
-            <div>Нет изображения</div>
-          )}
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">{sings.track.name}</h1>
-            <p className="songRow__info-p">
-              {sings.track.artists[0].name} - {sings.track.album.name}
-            </p>
-          </div>
-        </div>
-      ));
-    } else {
-      return <h3>Загрузка плейлиста...</h3>;
-    }
-  };
-
-  if (playlist?.error) {
+  if (isLoading) {
+    return <h3>Загрузка страницы...</h3>;
+  }
+  if (error) {
     return (
       <div>
         <h3>Произошла ошибка при загрузке данных</h3>
-        <p>Подробнее: {playlist?.errorText || "Неизвестная ошибка"} </p>
+        <p>Подробнее: {error} </p>
       </div>
     );
   }
+
+  const renderResults = () => {
+    /* Рендер полученных результатов */
+    return data?.tracks.items.map((sings) => (
+      <div className="songRow" key={sings.track.id}>
+        {sings.track.album.images[2] ? (
+          <img
+            className="songRow__album"
+            src={sings.track.album.images[2].url}
+            alt={sings.track.album.name}
+          />
+        ) : (
+          <div>Нет изображения</div>
+        )}
+        <div className="songRow__info">
+          <h1 className="songRow__info-h1">{sings.track.name}</h1>
+          <p className="songRow__info-p">
+            {sings.track.artists[0].name} - {sings.track.album.name}
+          </p>
+        </div>
+      </div>
+    ));
+  };
+
   return (
     <div>
-      {!playlist?.isLoading && playlist?.data ? (
-        <div className="main__info">
-          <img
-            className="main__info-img"
-            alt={playlist.data.name}
-            src={playlist.data.images[0].url}
-          />
-          <div className="main__infoText">
-            <strong>ПЛЕЙЛИСТ</strong>
-            <h2 className="main__infoText-h2">{playlist.data.name}</h2>
-            <p className="main__infoText-p">{playlist.data.description}</p>
-          </div>
+      <div className="main__info">
+        <img
+          className="main__info-img"
+          alt={data?.name}
+          src={data?.images[0].url}
+        />
+        <div className="main__infoText">
+          <strong>ПЛЕЙЛИСТ</strong>
+          <h2 className="main__infoText-h2">{data?.name}</h2>
+          <p className="main__infoText-p">{data?.description}</p>
         </div>
-      ) : (
-        <h3>Загрузка информации о плейлисте...</h3>
-      )}
+      </div>
       <div className="main__songs">
         <div className="main__icons">
           <svg
