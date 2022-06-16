@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
 import "../css/first.css";
-import useQuery from "./query";
+import useQuery from "./spotify";
 
 interface playlistProp {
-  /* Задаю структуру переменной плейлиста */
   id: string;
   description: string;
   images: [{ url: string }];
@@ -31,9 +29,6 @@ function First() {
     "GET"
   );
 
-  /* console.log(error);
-  console.log(isLoading);
-  console.log(data); */
 
   if (isLoading) {
     return <h3>Загрузка страницы...</h3>;
@@ -42,7 +37,7 @@ function First() {
     return (
       <div>
         <h3>Произошла ошибка при загрузке данных</h3>
-        <p>Подробнее: {error} </p>
+        <p>Подробнее: {error.message} </p>
       </div>
     );
   }

@@ -1,9 +1,9 @@
 import "../css/search.css";
-import { Spotify } from "./spotify";
+import { searchResults } from "./spotify";
 import { useState } from "react";
 
-interface useQuery {
-  artists?: {
+interface searchProp {
+  artists: {
     /* В дальнейшем я хочу сделать поиск и по исполнителям */
     items: [
       {
@@ -12,7 +12,7 @@ interface useQuery {
       }
     ];
   };
-  tracks?: {
+  tracks: {
     /* Пока что поиск идет по трекам */
     items: [
       {
@@ -26,49 +26,46 @@ interface useQuery {
       }
     ];
   };
-  isFind?: boolean;
-  error: boolean;
-  errorText?: string;
-  isLoading: boolean;
 }
 
 function Search() {
-  const { searchResults } = Spotify(); /* Функция запроса получения поиска */
-  const [searchKey, setSearchKey] = useState(""); /* Переменная-ключ, по которому идет поиск результатов */
-  const [results, setResults] = useState<useQuery>();
+  const [searchKey, setSearchKey] = useState("");
+  const [results, setResults] = useState<searchProp>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFind, setIsFind] = useState(false);
+  const [error, setError] = useState<Error>();
 
   const Searching = () => {
-    /* Получение результатов поиска и запись в переменную. Поиск идет по searchKey, лимит постаил 50, чтобы не перегружать страницу */
+    /* Получение результатов поиска и запись в переменную. Поиск идет по searchKey, лимит постаил 30, чтобы не перегружать страницу */
     if (searchKey !== "") {
-      setResults({ error: false, isLoading: true });
-      searchResults({ query: searchKey, limit: 50 })
+      setIsLoading(true);
+      searchResults({ query: searchKey, limit: 30 })
         .then((result) => {
           if (
             result.tracks.items.length === 0 ||
             result.artists.items.length === 0
           ) {
-            setResults({ isFind: false, error: false, isLoading: false });
+            setIsFind(false);
           } else {
             setResults({
               artists: result.artists,
               tracks: result.tracks,
-              isFind: true,
-              error: false,
-              isLoading: false,
             });
+            setIsFind(true);
           }
+          setIsLoading(false);
         })
         .catch((error) => {
-          setResults({ error: true, errorText: error, isLoading: false });
+          setError(error.message);
         });
     }
   };
 
   const renderResults = () => {
-    if (results?.isLoading) {
+    if (isLoading) {
       return <h3 className="main-search-h3">Загрузка результатов...</h3>;
     }
-    if (results?.tracks && results.isFind) {
+    if (isFind && results) {
       /* Рендер результатов поиска */
       return results.tracks.items.map((sings) => (
         <div className="songRow" key={sings.id}>
@@ -89,16 +86,18 @@ function Search() {
           </div>
         </div>
       ));
-    } else {
-      return <h3 className="main-search-h3">Нет результатов</h3>;
     }
+    if (!results) {
+      return <h3 className="main-search-h3">Введите текст для поиска</h3>;
+    }
+    return <h3 className="main-search-h3">Результаты не найдены</h3>;
   };
 
-  if (results?.error) {
+  if (error) {
     return (
       <div>
         <h1>Произошла ошибка при загрузке данных</h1>
-        <p>Подробнее: {results?.errorText || "Неизвестная ошибка"} </p>
+        <p>Подробнее: {error} </p>
       </div>
     );
   }

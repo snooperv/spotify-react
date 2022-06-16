@@ -1,10 +1,9 @@
 import "../css/media.css";
-import { Spotify } from "./spotify";
-import { useState, useEffect } from "react";
+import useQuery from "./spotify";
 
-interface useQuery {
+interface artistsProp {
   /* Структура переменной исполнителей */
-  artists?: {
+  artists: {
     items: [
       {
         id: string;
@@ -13,62 +12,46 @@ interface useQuery {
       }
     ];
   };
-  error: boolean;
-  errorText?: string;
-  isLoading: boolean;
 }
 
 function Media() {
-  const { myArtists } = Spotify(); /* Функция запроса получения исполнителей */
-  const [artists, setArtists] = useState<useQuery>();
+  const { error, isLoading, data } = useQuery<artistsProp>(
+    "/me/following?type=artist",
+    "GET"
+  );
 
-  useEffect(() => {
-    setArtists({ error: false, isLoading: true });
-    /* Получение и запись исполнителей */
-    myArtists()
-      .then((data) => {
-        setArtists({
-          artists: data.artists,
-          error: false,
-          isLoading: false,
-        });
-      })
-      .catch((error) => {
-        setArtists({ error: true, errorText: error, isLoading: false });
-      });
-  }, []);
-
-  const renderResults = () => {
-    if (!artists?.isLoading && artists?.artists) {
-      /* Рендер результатов исполнителей */
-      return artists.artists.items.map((artist) => (
-        <div className="main__media-card" key={artist.id}>
-          <img
-            src={artist.images[0].url}
-            alt="card image"
-            className="card__img"
-          />
-          <div className="card__singer">{artist.name}</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-      ));
-    } else {
-      return <h3>Загрузка списка исполнителей...</h3>;
-    }
-  };
-
-  if (artists?.error) {
+  if (error) {
     return (
       <div>
-        <h1>Произошла ошибка при загрузке данных</h1>
-        <p>Подробнее: {artists?.errorText || "Неизвестная ошибка"} </p>
+        <h3>Произошла ошибка при загрузке данных</h3>
+        <p>Подробнее: {error.message} </p>
       </div>
     );
   }
+
+  const renderResults = () => {
+    /* Рендер результатов исполнителей */
+    return data?.artists.items.map((artist) => (
+      <div className="main__media-card" key={artist.id}>
+        <img
+          src={artist.images[0].url}
+          alt="card image"
+          className="card__img"
+        />
+        <div className="card__singer">{artist.name}</div>
+        <div className="card__type">Исполнитель</div>
+      </div>
+    ));
+  };
+
   return (
     <div className="main__media">
       <h1 className="main__media-header">Исполнители</h1>
-      <div className="main__media-cards">{renderResults()}</div>
+      {isLoading ? (
+        <h3>Загрузка списка исполнителей...</h3>
+      ) : (
+        <div className="main__media-cards">{renderResults()}</div>
+      )}
     </div>
   );
 }

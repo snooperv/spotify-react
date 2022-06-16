@@ -1,48 +1,30 @@
 import "../css/header.css";
 import HeaderMedia from "./HeaderMedia";
-import { Spotify } from "./spotify";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useQuery from "./spotify";
 
 interface HeaderProps {
   page: string;
 }
 
-interface useQuery {
-  /* Задаю структуру пользователя */
-  userProfile?: {
-    userName: string;
-    userImg: string;
-  };
-  error: boolean;
-  errorText?: string;
-  isLoading: boolean;
+interface userProp {
+  display_name: string;
+  images: [{ url: string }];
 }
 
 function Header({ page }: HeaderProps) {
-  const { getAboutMe } = Spotify(); /* Подключаю запрос информации о пользователе */
-  const [userInfo, setUserInfo] = useState<useQuery>();
-
-  useEffect(() => {
-    setUserInfo({ error: false, isLoading: true });
-    getAboutMe()
-      .then((result) => {
-        /* Получаю данные о пользователе */
-        setUserInfo({
-          userProfile: {
-            userName: result.display_name,
-            userImg:
-              "img/avatar.svg" /* Изначально ставлю дефолтную картинку */,
-          },
-          error: false,
-          isLoading: false,
-        });
-      })
-      .catch((error) => {
-        setUserInfo({ error: true, errorText: error, isLoading: false });
-      });
-  }, []);
-
+  const { error, isLoading, data } = useQuery<userProp>("/me", "GET");
   const [userMenu, setUserMenu] = useState({ open: false });
+
+  if (error) {
+    return (
+      <div>
+        <h3>Произошла ошибка при загрузке данных</h3>
+        <p>Подробнее: {error.message} </p>
+      </div>
+    );
+  }
+
   const downList = () => {
     /* Открывающееся меню пользователя (справа сверху) */
     setUserMenu({ open: !userMenu.open });
@@ -53,19 +35,11 @@ function Header({ page }: HeaderProps) {
     window.location.reload();
   };
 
-  if (userInfo?.error) {
-    return (
-      <div>
-        <h3>Произошла ошибка при загрузке данных</h3>
-        <p>Подробнее: {userInfo?.errorText || "Неизвестная ошибка"} </p>
-      </div>
-    );
-  }
   return (
     <div className="header">
       {page.startsWith("media") ? <HeaderMedia /> : ""}
       <div className="header__left-fake"></div>
-      {userInfo?.isLoading ? (
+      {isLoading ? (
         <p>Загрузка профиля...</p>
       ) : (
         <button
@@ -76,20 +50,14 @@ function Header({ page }: HeaderProps) {
           <figure className="header__figure" title="Vadim">
             <div className="header__photo">
               <img
-                src={userInfo?.userProfile ? userInfo.userProfile.userImg : ""}
-                alt={
-                  userInfo?.userProfile
-                    ? userInfo.userProfile.userName
-                    : "Фото не загружено"
-                }
+                src="img/avatar.svg"
+                alt="Фото профиля"
                 className="header__avatar"
               />
             </div>
           </figure>
           <span dir="auto" className="header__username">
-            {userInfo?.userProfile
-              ? userInfo.userProfile.userName
-              : "Имя не загружено"}
+            {data?.display_name}
           </span>
           {userMenu.open /* Стрелка вниз/вверх */ ? (
             <svg
