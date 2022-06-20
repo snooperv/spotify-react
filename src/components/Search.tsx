@@ -2,8 +2,6 @@ import "../css/search.css";
 import { useState } from "react";
 import Searching from "./Searching";
 
-
-
 function Search() {
   const [searchKey, setSearchKey] = useState("");
   const [results, setResults] = useState<JSX.Element>();
