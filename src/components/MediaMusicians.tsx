@@ -1,21 +1,8 @@
 import "../css/media.css";
 import useQuery from "./spotify";
 
-interface artistsProp {
-  /* Структура переменной исполнителей */
-  artists: {
-    items: [
-      {
-        id: string;
-        name: string;
-        images: [{ url: string }, { url: string }, { url: string }];
-      }
-    ];
-  };
-}
-
 function Media() {
-  const { error, isLoading, data } = useQuery<artistsProp>(
+  const { error, isLoading, data } = useQuery(
     "/me/following?type=artist",
     "GET"
   );

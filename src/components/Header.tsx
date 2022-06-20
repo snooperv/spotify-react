@@ -7,13 +7,8 @@ interface HeaderProps {
   page: string;
 }
 
-interface userProp {
-  display_name: string;
-  images: [{ url: string }];
-}
-
 function Header({ page }: HeaderProps) {
-  const { error, isLoading, data } = useQuery<userProp>("/me", "GET");
+  const { error, isLoading, data } = useQuery("/me", "GET");
   const [userMenu, setUserMenu] = useState({ open: false });
 
   if (error) {

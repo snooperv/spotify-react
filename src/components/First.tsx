@@ -1,34 +1,11 @@
 import "../css/first.css";
 import useQuery from "./spotify";
 
-interface playlistProp {
-  id: string;
-  description: string;
-  images: [{ url: string }];
-  name: string;
-  tracks: {
-    items: [
-      {
-        track: {
-          id: string;
-          album: {
-            name: string;
-            images: [{ url: string }, { url: string }, { url: string }];
-          };
-          artists: [{ name: string }];
-          name: string;
-        };
-      }
-    ];
-  };
-}
-
 function First() {
-  const { error, isLoading, data } = useQuery<playlistProp>(
+  const { error, isLoading, data } = useQuery(
     "/playlists/37i9dQZF1E361aZi6orfUx",
     "GET"
   );
-
 
   if (isLoading) {
     return <h3>Загрузка страницы...</h3>;

@@ -56,26 +56,6 @@ export const useGetToken = () => {
   return token;
 };
 
-interface SearchResultsProps {
-  query: string;
-  limit: number;
-}
-
-export const searchResults = ({ query, limit }: SearchResultsProps) => {
-  /* Получение результатов поиска */
-  const qs = `q=${query}&type=track%2Cartist&limit=${limit}`;
-
-  return fetch(`${apiUrl}/search?${qs}`, {
-    headers: {
-      Authorization: `Bearer ` + token,
-    },
-    method: "GET",
-  }).then((data) => {
-    /* Данные возвращаются в json формате */
-    return data.json();
-  });
-};
-
 export const isLogOut = () => {
   /* Проверка на выход */
   if (!token) {
@@ -91,15 +71,65 @@ export const isLogOut = () => {
   return false;
 };
 
-interface IQueryData<T> {
-  data?: T;
+interface APIProp {
+  display_name: string;
+  id: string;
+  description: string;
+  images: [{ url: string }];
+  name: string;
+  artists: {
+    /* В дальнейшем я хочу сделать поиск и по исполнителям */
+    items: [
+      {
+        id: string;
+        name: string;
+        images: [{ url: string }, { url: string }, { url: string }];
+      }
+    ];
+  };
+  tracks: {
+    /* Пока что поиск идет по трекам */
+    items: [
+      {
+        id: string;
+        album: {
+          name: string;
+          images: [{ url: string }, { url: string }, { url: string }];
+        };
+        artists: [{ name: string }];
+        name: string;
+        track: {
+          id: string;
+          album: {
+            name: string;
+            images: [{ url: string }, { url: string }, { url: string }];
+          };
+          artists: [{ name: string }];
+          name: string;
+        };
+      }
+    ];
+  };
+  items: [
+    {
+      album: {
+        id: string;
+        artists: [{ name: string }];
+        name: string;
+        images: [{ url: string }, { url: string }, { url: string }];
+      };
+    }
+  ];
+}
+
+interface IQueryData {
+  data?: APIProp;
   error?: Error;
   isLoading: boolean;
 }
 
-function useQuery<T>(path: string, method: string): IQueryData<T> {
-  const [query, setQuery] = useState<IQueryData<T>>({ isLoading: true });
-
+function useQuery<T>(path: string, method: string): IQueryData {
+  const [query, setQuery] = useState<IQueryData>({ isLoading: true });
   useEffect(() => {
     fetch(`${apiUrl}${path}`, {
       headers: {
@@ -145,7 +175,7 @@ function useQuery<T>(path: string, method: string): IQueryData<T> {
         });
         console.log("Ошибка загрузки: " + e.message);
       });
-  }, []);
+  }, [path]);
 
   return query;
 }

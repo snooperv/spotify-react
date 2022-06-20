@@ -1,21 +1,8 @@
 import "../css/media.css";
 import useQuery from "./spotify";
 
-interface albumsProp {
-  items: [
-    {
-      album: {
-        id: string;
-        artists: [{ name: string }];
-        name: string;
-        images: [{ url: string }, { url: string }, { url: string }];
-      };
-    }
-  ];
-}
-
 function Media() {
-  const { error, isLoading, data } = useQuery<albumsProp>("/me/albums", "GET");
+  const { error, isLoading, data } = useQuery("/me/albums", "GET");
 
   if (error) {
     return (
