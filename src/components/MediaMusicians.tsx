@@ -1,63 +1,44 @@
 import "../css/media.css";
+import useQuery from "./spotify";
 
 function Media() {
+  const { error, isLoading, data } = useQuery(
+    "/me/following?type=artist",
+    "GET"
+  );
+
+  if (error) {
+    return (
+      <div>
+        <h3>Произошла ошибка при загрузке данных</h3>
+        <p>Подробнее: {error.message} </p>
+      </div>
+    );
+  }
+
+  const renderResults = () => {
+    /* Рендер результатов исполнителей */
+    return data?.artists.items.map((artist) => (
+      <div className="main__media-card" key={artist.id}>
+        <img
+          src={artist.images[0].url}
+          alt="card image"
+          className="card__img"
+        />
+        <div className="card__singer">{artist.name}</div>
+        <div className="card__type">Исполнитель</div>
+      </div>
+    ));
+  };
+
   return (
     <div className="main__media">
       <h1 className="main__media-header">Исполнители</h1>
-      <div className="main__media-cards">
-        <div className="main__media-card">
-          <img src="img/11.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Red Hot Chili Peppers</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <img src="img/12.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Звери</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <img src="img/13.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Король и Шут</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <img src="img/14.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Ляпис Трубецкой</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <img src="img/15.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Led Zeppelin</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <img src="img/16.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Twenty One Pilots</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <img src="img/17.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Skillet</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <img src="img/18.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Papa Roach</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <img src="img/19.jpg" alt="card image" className="card__img" />
-          <div className="card__singer">Imagine Dragons</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-        <div className="main__media-card">
-          <div className="test">
-          <img src="img/20.jpg" alt="card image" className="card__img" />
-          </div>
-          <div className="card__singer">Linkin Park</div>
-          <div className="card__type">Исполнитель</div>
-        </div>
-      </div>
+      {isLoading ? (
+        <h3>Загрузка списка исполнителей...</h3>
+      ) : (
+        <div className="main__media-cards">{renderResults()}</div>
+      )}
     </div>
   );
 }

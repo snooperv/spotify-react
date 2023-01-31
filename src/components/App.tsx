@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from "react";
 import "../css/App.css";
 import Login from "./Login";
-import { getTokenFromUrl } from "./spotify";
+import { useGetToken } from "./spotify";
 import { Navigate } from "react-router-dom";
 
 function App() {
-  token = GetToken();
+  /* Первая страница, которая встречает пользователя */
+  const token = useGetToken();
   return (
-    <div className="app">{token ? <Navigate to="/home" /> : <Login />}</div>
-  );
-}
-
-function GetToken() {
-  const [token, setToken] = useState("");
-
-  useEffect(() => {
-    const hash = getTokenFromUrl();
-    window.location.hash = "";
-    const _token = hash.access_token;
-    if (_token) {
-      setToken(_token);
-    }
-  }, []);
-  return token;
+    <div className="app">{token ? <Navigate to="/" /> : <Login />}</div>
+  ); /* Если токен есть, возвращается главная страница, если нет, переходит опять на страницу входа */
 }
 
 export default App;
-export let token: string;

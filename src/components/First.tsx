@@ -1,16 +1,59 @@
 import "../css/first.css";
+import useQuery from "./spotify";
 
 function First() {
+  const { error, isLoading, data } = useQuery(
+    "/playlists/37i9dQZF1E361aZi6orfUx",
+    "GET"
+  );
+
+  if (isLoading) {
+    return <h3>Загрузка страницы...</h3>;
+  }
+  if (error) {
+    return (
+      <div>
+        <h3>Произошла ошибка при загрузке данных</h3>
+        <p>Подробнее: {error.message} </p>
+      </div>
+    );
+  }
+
+  const renderResults = () => {
+    /* Рендер полученных результатов */
+    return data?.tracks.items.map((sings) => (
+      <div className="songRow" key={sings.track.id}>
+        {sings.track.album.images[2] ? (
+          <img
+            className="songRow__album"
+            src={sings.track.album.images[2].url}
+            alt={sings.track.album.name}
+          />
+        ) : (
+          <div>Нет изображения</div>
+        )}
+        <div className="songRow__info">
+          <h1 className="songRow__info-h1">{sings.track.name}</h1>
+          <p className="songRow__info-p">
+            {sings.track.artists[0].name} - {sings.track.album.name}
+          </p>
+        </div>
+      </div>
+    ));
+  };
+
   return (
     <div>
       <div className="main__info">
-        <img className="main__info-img" alt="Микс дня" src="img/mix_day.jpg" />
+        <img
+          className="main__info-img"
+          alt={data?.name}
+          src={data?.images[0].url}
+        />
         <div className="main__infoText">
           <strong>ПЛЕЙЛИСТ</strong>
-          <h2 className="main__infoText-h2">Микс дня</h2>
-          <p className="main__infoText-p">
-            Linkin Park, Red Hot Chili Peppers, Skillet и не только
-          </p>
+          <h2 className="main__infoText-h2">{data?.name}</h2>
+          <p className="main__infoText-p">{data?.description}</p>
         </div>
       </div>
       <div className="main__songs">
@@ -42,80 +85,7 @@ function First() {
             <path d="M4.5 13.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm15 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-7.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
           </svg>
         </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/1.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">Bleed It Out</h1>
-            <p className="songRow__info-p">Linkin Park - Minutes to Midnight</p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/2.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">By the Way</h1>
-            <p className="songRow__info-p">Red Hot Chili - By the Way</p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/3.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">Monster</h1>
-            <p className="songRow__info-p">Skillet - Awake (Deluxe Edition)</p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/4.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">Take It Out On Me</h1>
-            <p className="songRow__info-p">
-              Thousand Foot Krutch - Welcome To The Masquerade
-            </p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/5.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">Born For Greatness</h1>
-            <p className="songRow__info-p">Papa Roach - Crooked Teeth (Deluxe)</p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/6.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">Same Old War</h1>
-            <p className="songRow__info-p">Our Last Nught - Oak Island</p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/7.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">Prayer Of The Refugee</h1>
-            <p className="songRow__info-p">
-              Rise Against - The Sufferer & The Witness
-            </p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/8.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">What I've Done</h1>
-            <p className="songRow__info-p">Linkin Park - Minutes to Midnight</p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/9.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">Can't Stop</h1>
-            <p className="songRow__info-p">Red Hot Chili Peppers - By the Way</p>
-          </div>
-        </div>
-        <div className="songRow">
-          <img className="songRow__album" src="img/10.jpg" alt="" />
-          <div className="songRow__info">
-            <h1 className="songRow__info-h1">Feel Invincible</h1>
-            <p className="songRow__info-p">Skillet - Unleashed</p>
-          </div>
-        </div>
+        {renderResults()}
       </div>
     </div>
   );

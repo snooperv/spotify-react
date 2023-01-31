@@ -7,18 +7,18 @@ import Footer from "./Footer";
 import First from "./First";
 import Search from "./Search";
 import MediaMusicians from "./MediaMusicians";
-import { token } from "./App";
 import MediaAlbum from "./MediaAlbum";
+import { isLogOut } from "./spotify";
 
 interface MainProps {
   page: string;
 }
 
 function Main({ page }: MainProps) {
-  if (!token) {
-    return <Navigate to="/" />;
+  if (isLogOut()) {
+    /* Если токена нет, перебрасывает на страницу входа */
+    return <Navigate to="/login" />;
   }
-  /* console.log("token:", token); */
   let content = <First />;
   let main = "main ";
   if (page === "search") {
